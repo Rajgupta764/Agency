@@ -68,44 +68,46 @@ const Navbar: React.FC<NavbarProps> = ({ onGetStartedClick }) => {
   }, [closeMenu]);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'
-    }`} style={isScrolled ? { backgroundColor: 'rgba(0, 0, 0, 0.95)' } : undefined}>
-      <div className="container-custom py-3 md:py-6 flex items-center justify-between">
-         <a href="#hero" className="flex items-center gap-2 text-2xl font-bold z-50">
-          <div className="w-8 h-8 rounded-lg gradient-primary" />
-          <span className="gradient-text font-playfair tracking-wide">StayMitra</span>
-        </a>
+    <>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'backdrop-blur-md border-b border-white/10 shadow-lg' : 'bg-transparent'
+      }`} style={isScrolled ? { backgroundColor: 'rgba(0, 0, 0, 0.95)' } : undefined}>
+        <div className="container-custom py-3 md:py-6 flex items-center justify-between">
+           <a href="#hero" className="flex items-center gap-2 text-2xl font-bold">
+            <div className="w-8 h-8 rounded-lg gradient-primary" />
+            <span className="gradient-text font-playfair tracking-wide">StayMitra</span>
+          </a>
 
-        <div className="hidden lg:flex items-center gap-2">
-          {navItems.map((item) => (
-            <a key={item.label} href={item.href}
-              className={`px-4 py-3 rounded-lg transition-colors duration-200 text-sm font-medium ${
-                activeSection === item.href.substring(1) ? 'text-white' : 'text-gray-300 hover:text-white'
-              }`}
-              style={activeSection === item.href.substring(1) ? { color: '#F69D39' } : undefined}
-            >{item.label}</a>
-          ))}
+          <div className="hidden lg:flex items-center gap-2">
+            {navItems.map((item) => (
+              <a key={item.label} href={item.href}
+                className={`px-4 py-3 rounded-lg transition-colors duration-200 text-sm font-medium ${
+                  activeSection === item.href.substring(1) ? 'text-white' : 'text-gray-300 hover:text-white'
+                }`}
+                style={activeSection === item.href.substring(1) ? { color: '#F69D39' } : undefined}
+              >{item.label}</a>
+            ))}
+          </div>
+
+          <button onClick={onGetStartedClick} className="hidden lg:inline-flex btn btn-primary text-sm">Get Started</button>
+
+          <button className="lg:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+          >
+            <motion.div animate={{ rotate: isMobileMenuOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
+              {isMobileMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
+            </motion.div>
+          </button>
         </div>
-
-        <button onClick={onGetStartedClick} className="hidden lg:inline-flex btn btn-primary text-sm">Get Started</button>
-
-        <button className="lg:hidden relative z-50 p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <motion.div animate={{ rotate: isMobileMenuOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
-            {isMobileMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
-          </motion.div>
-        </button>
-      </div>
+      </nav>
 
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="fixed inset-0 bg-black/70 z-40 lg:hidden"
+              className="fixed inset-0 bg-black/70 z-[60] lg:hidden"
               onClick={closeMenu}
             />
 
@@ -114,10 +116,10 @@ const Navbar: React.FC<NavbarProps> = ({ onGetStartedClick }) => {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 250 }}
-              className="fixed top-0 left-0 bottom-0 w-[280px] max-w-[85vw] z-40 lg:hidden flex flex-col"
+              className="fixed top-0 left-0 bottom-0 w-[280px] max-w-[85vw] z-[60] lg:hidden flex flex-col"
               style={{ backgroundColor: '#0B1120', borderRight: '1px solid rgba(255,255,255,0.06)' }}
             >
-              <div className="flex-1 overflow-y-auto min-h-0 px-4 pt-14 pb-4">
+              <div className="flex-1 overflow-y-auto min-h-0 px-4 pt-20 pb-4">
                 <div className="flex items-center justify-between mb-6">
                   <span className="gradient-text font-playfair font-bold text-xl tracking-wide">StayMitra</span>
                   <button onClick={closeMenu} className="min-w-[44px] min-h-[44px] flex items-center justify-center" aria-label="Close menu">
@@ -160,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ onGetStartedClick }) => {
           </>
         )}
       </AnimatePresence>
-    </nav>
+    </>
   );
 };
 
